@@ -36,7 +36,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room outside, theater, pub, lab, office, gym, hallway, roof, closet;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -45,12 +45,28 @@ public class Game
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
         
+        // extra rooms (wip)
+        gym = new Room("in the gymnasium");
+        hallway = new Room("in the main hallway");
+        roof = new Room("on the university roof"); // need to clear a path to access
+        closet = new Room("in the utility closet"); // needs a key to access
+        
         // create the items
-        outside.setItem(new Item("an empty water bottle", 0));
-        theater.setItem(new Item("a playbill", 0));
-        pub.setItem(new Item("a bottle of Jack Daniels", 3));
-        lab.setItem(new Item("a textbook", 6));
-        office.setItem(new Item("a suspicious key", 0));
+        outside.addItem(new Item("a suspicious key", 1));
+        outside.addItem(new Item("a ripped campus map", 0));
+        
+        theater.addItem(new Item("a pack of mentos", 1));
+        theater.addItem(new Item("a USB stick", 1));
+        
+        pub.addItem(new Item("a bottle of soda", 2));
+        pub.addItem(new Item("a menu", 1));
+        
+        lab.addItem(new Item("a programming textbook", 6));
+        lab.addItem(new Item("a mysterious sticky note", 0));
+        
+        office.addItem(new Item("a folder", 3));
+        office.addItem(new Item("a pencil", 1));
+        
         
         
         // initialise room exits
