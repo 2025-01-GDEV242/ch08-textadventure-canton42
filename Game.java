@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,7 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room previousRoom;
+    private Stack<Room> roomHistory;
         
     /**
      * Create the game and initialise its internal map.
@@ -28,7 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        previousRoom = null;
+        roomHistory = new Stack<>();
         
     }
 
@@ -172,17 +173,16 @@ public class Game
     }
     
     /**
-     * Try to go back to the previous room.
+     * Try to go back to the previous room using stack
      */
     private void goBack() {
-        if (previousRoom == null) {
+        if (roomHistory.isEmpty()) {
             System.out.println("You have not traveled anywhere yet.");
             return;
         }
         
-        Room tempRoom = currentRoom;
+        Room previousRoom = roomHistory.pop();
         currentRoom = previousRoom;
-        previousRoom = tempRoom;
         
         System.out.println(currentRoom.getLongDescription());
     }
@@ -207,7 +207,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
-            previousRoom = currentRoom;
+            roomHistory.push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
