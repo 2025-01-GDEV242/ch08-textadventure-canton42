@@ -11,14 +11,15 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Nolan Canto
+ * @version 2025.04.02
  */
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
+    private Room previousRoom;
         
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +28,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        previousRoom = null;
+        
     }
 
     /**
@@ -140,6 +143,10 @@ public class Game
             case GO:
                 goRoom(command);
                 break;
+            
+            case BACK:
+                goBack();
+                break;
 
             case QUIT:
                 wantToQuit = quit(command);
@@ -163,7 +170,22 @@ public class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-
+    
+    /**
+     * Try to go back to the previous room.
+     */
+    private void goBack() {
+        if (previousRoom == null) {
+            System.out.println("You have not traveled anywhere yet.");
+            return;
+        }
+        
+        Room tempRoom = currentRoom;
+        currentRoom = previousRoom;
+        previousRoom = tempRoom;
+        
+        System.out.println(currentRoom.getLongDescription());
+    }
     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
@@ -185,6 +207,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            previousRoom = currentRoom;
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
