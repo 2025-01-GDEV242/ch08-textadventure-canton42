@@ -1,16 +1,17 @@
 import java.util.Stack;
-//import java.util.Scanner;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ *  can walk around some scenery. That's all. It has been expanded upon
+ *  to have more rooms, items, a player inventory, more commands, and other
+ *  improvements. 
  * 
  *  To play this game, create an instance of this class and call the "play"
- *  method.
+ *  method. There is also a "main" method that will allow you to play the game
+ *  outside of BlueJ.
  * 
  *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
+ *  rooms, items, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
  * @author  Nolan Canto
@@ -24,7 +25,7 @@ public class Game
     private Stack<Room> roomHistory;
         
     /**
-     * Creates the game, player name and starting location, and initialises its internal map.
+     * Creates the game, room history, player and their starting location, and initialises its internal map.
      */
     public Game() 
     {
@@ -39,13 +40,11 @@ public class Game
     }
 
     /**
-     * Create all the rooms and link their exits together.
-     * 
-     * 8.20/8.21 - creates all the items and links them to a specific room.
+     * Creates all rooms, their items, and links their exits together.
      */
     private Room createRooms()
     {
-        Room outside, theater, pub, lab, office, gym, hallway, roof, closet;
+        Room outside, theater, pub, lab, office, gym, hallway, closet;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -54,31 +53,39 @@ public class Game
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
         
-        // extra rooms (wip)
+        // extra rooms
         gym = new Room("in the gymnasium");
         hallway = new Room("in the main hallway");
-        roof = new Room("on the university roof"); // need to clear a path to access
-        closet = new Room("in the utility closet"); // needs a key to access
+        closet = new Room("in the utility closet"); 
         
         // create the items
-        outside.addItem(new Item("key1 : a suspicious key", 1));
+        outside.addItem(new Item("key : a suspicious key", 1));
         outside.addItem(new Item("map : a ripped campus map", 0));
         
-        theater.addItem(new Item("mentos : a pack of mentos", 1));
+        theater.addItem(new Item("mentos : a pack of mentos", 0));
         theater.addItem(new Item("usb : a USB stick", 1));
         
-        pub.addItem(new Item("soda : a bottle of soda", 2));
-        pub.addItem(new Item("menu : a pub menu", 1));
+        pub.addItem(new Item("soda : a bottle of soda", 1));
+        pub.addItem(new Item("menu : a pub menu", 0));
         
-        lab.addItem(new Item("textbook : a programming textbook", 6));
+        lab.addItem(new Item("textbook : a programming textbook", 5));
         lab.addItem(new Item("note : a mysterious sticky note", 0));
         
-        office.addItem(new Item("folder : an office folder", 3));
-        office.addItem(new Item("pencil : a pencil", 1));
+        office.addItem(new Item("folder : an office folder", 1));
+        office.addItem(new Item("pencil : a pencil", 0));
         
+        hallway.addItem(new Item("gum : a pack of gum", 0));
+        hallway.addItem(new Item("book : a historical-fiction book", 4));
+        
+        closet.addItem(new Item("drill : a power drill", 5));
+        closet.addItem(new Item("ladder : a huge foldable ladder", 30));
+        
+        gym.addItem(new Item("basketball : a deflated basketball", 1));
+        gym.addItem(new Item("racket : a badminton racket", 0));
         
         
         // initialise room exits
+        outside.setExit("north", hallway);
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
@@ -91,8 +98,14 @@ public class Game
         lab.setExit("east", office);
 
         office.setExit("west", lab);
-
-        //player.getCurrentRoom() = outside;  // start game outside
+        
+        hallway.setExit("north", gym);
+        hallway.setExit("south", outside);
+        hallway.setExit("east", closet);
+        
+        closet.setExit("west", hallway);
+        
+        gym.setExit("south", hallway);
         
         return outside;
     }
@@ -266,5 +279,12 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+    /**
+     * main method that allows the game to be played outside of BlueJ.
+     */
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.play();
     }
 }
