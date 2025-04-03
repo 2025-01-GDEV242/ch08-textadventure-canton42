@@ -1,0 +1,43 @@
+LEVEL FEATURES
+
+1. Basic Game Structure:
+   - Fully functional game loop
+   - Command parser system
+   - Room navigation system
+   - Player class that handles items
+
+2. Room Features:
+   - Multiple interconnected rooms (8 total)
+   - Unique room descriptions
+   - Directional exits (north, south, east, west)
+
+3. Item System:
+   - Items with descriptions and weights
+   - 2 items placed in each room
+   - Player bag (inventory) system
+   - 'take' and 'drop' commands
+
+4. Movement:
+   - 'go' command with directional movement
+   - 'back' command to return to previous room
+   - Room history tracking using stack
+
+5. Additional Commands:
+   - 'help' command showing available commands
+   - 'quit' command to exit game
+   - 'inventory' command to view carried items
+   - 'look' command to view current room
+
+6. Technical Implementation:
+   - Proper class structure (Game, Player, Room, Item, etc.)
+   - Javadoc documentation for all classes
+   - Proper error handling for invalid commands
+   - main() method for executing outside of BlueJ
+
+7. Documentation:
+   - Complete Javadoc comments
+   - Generated documentation in doc folder
+   - The features list you are reading right now. Hello!
+
+EXTRA CREDIT:
+  - None have been implemented for this project.
