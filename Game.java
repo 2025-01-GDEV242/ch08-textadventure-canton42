@@ -61,20 +61,20 @@ public class Game
         closet = new Room("in the utility closet"); // needs a key to access
         
         // create the items
-        outside.addItem(new Item("a suspicious key", 1));
-        outside.addItem(new Item("a ripped campus map", 0));
+        outside.addItem(new Item("key1 : a suspicious key", 1));
+        outside.addItem(new Item("map : a ripped campus map", 0));
         
-        theater.addItem(new Item("a pack of mentos", 1));
-        theater.addItem(new Item("a USB stick", 1));
+        theater.addItem(new Item("mentos : a pack of mentos", 1));
+        theater.addItem(new Item("usb : a USB stick", 1));
         
-        pub.addItem(new Item("a bottle of soda", 2));
-        pub.addItem(new Item("a menu", 1));
+        pub.addItem(new Item("soda : a bottle of soda", 2));
+        pub.addItem(new Item("menu : a pub menu", 1));
         
-        lab.addItem(new Item("a programming textbook", 6));
-        lab.addItem(new Item("a mysterious sticky note", 0));
+        lab.addItem(new Item("textbook : a programming textbook", 6));
+        lab.addItem(new Item("note : a mysterious sticky note", 0));
         
-        office.addItem(new Item("a folder", 3));
-        office.addItem(new Item("a pencil", 1));
+        office.addItem(new Item("folder : an office folder", 3));
+        office.addItem(new Item("pencil : a pencil", 1));
         
         
         
@@ -155,6 +155,18 @@ public class Game
             case BACK:
                 goBack();
                 break;
+            
+            case TAKE:
+                if (!command.hasSecondWord()) {
+                    System.out.println("Take what?");
+                } else {
+                    player.takeItem(command.getSecondWord());
+                }
+                break;
+                
+            case DROP:
+                player.dropItem();
+                break;   
 
             case QUIT:
                 wantToQuit = quit(command);

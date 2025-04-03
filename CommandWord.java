@@ -4,6 +4,8 @@
  * 
  * Added commands:
  * BACK: returns player to previous room.
+ * TAKE: takes an item in the room.
+ * DROP: drops an item in the player's bag.
  * 
  * @author  Nolan Canto
  * @version 2025.04.02
@@ -12,7 +14,7 @@ public enum CommandWord
 {
     // A value for each command word along with its
     // corresponding user interface string.
-    GO("go"), QUIT("quit"), HELP("help"), BACK("back"), UNKNOWN("?");
+    GO("go"), QUIT("quit"), HELP("help"), BACK("back"), TAKE("take"), DROP("drop"), UNKNOWN("?");
     
     // The command string.
     private String commandString;

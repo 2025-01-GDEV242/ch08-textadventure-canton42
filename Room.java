@@ -123,5 +123,21 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    /**
+     * Removes an item from the room by name.
+     * 
+     * @param itemName the name/description of the item being removed.
+     * @return the removed item, null if not found.
+     */
+    public Item removeItem(String itemName) {
+        for (Item item : items) {
+            if (item.getDescription().contains(itemName)) {
+                items.remove(item);
+                return item;
+            }
+        }
+        return null;
+    }
 }
 
