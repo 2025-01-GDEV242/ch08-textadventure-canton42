@@ -1,6 +1,7 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * Class Room - a room in an adventure game.
@@ -12,14 +13,17 @@ import java.util.Iterator;
  * connected to other rooms via exits.  For each existing exit, the room 
  * stores a reference to the neighboring room.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * Each room will have multiple items within it.
+ * 
+ * @author  Nolan Canto
+ * @version 2025.04.02
  */
 
 public class Room 
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
+    private ArrayList<Item> items; //stores multiple items instead of one
 
     /**
      * Create a room described "description". Initially, it has
@@ -31,7 +35,27 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<>();
+        items = new ArrayList<>();
     }
+    
+    /**
+     * Adds an item to the room
+     * 
+     * @param item the item being added
+     */
+    public void addItem(Item item) {
+        items.add(item);
+    }
+    
+    /**
+     * Gets the items in the room
+     * 
+     * @return the items in the room, null if there is none present.
+     */
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+    
 
     /**
      * Define an exit from this room.
@@ -53,14 +77,25 @@ public class Room
     }
 
     /**
-     * Return a description of the room in the form:
+     * Return a description of the room and items in the form:
      *     You are in the kitchen.
+     *     You see the following: a fruit basket (weight: 3lbs)
      *     Exits: north west
-     * @return A long description of this room
+     * @return A long description of this room and the items
      */
     public String getLongDescription()
     {
-        return "You are " + description + ".\n" + getExitString();
+        String returnString = "You are " + description + ".\n";
+        
+        if (!items.isEmpty()) {
+            returnString += "You see the following:\n";
+            for (Item item : items) {
+                returnString += " " + item.getLongDescription() + "\n";
+            }
+        }
+        
+        returnString += getExitString();
+        return returnString;
     }
 
     /**
@@ -87,6 +122,22 @@ public class Room
     public Room getExit(String direction) 
     {
         return exits.get(direction);
+    }
+    
+    /**
+     * Removes an item from the room by name.
+     * 
+     * @param itemName the name/description of the item being removed.
+     * @return the removed item, null if not found.
+     */
+    public Item removeItem(String itemName) {
+        for (Item item : items) {
+            if (item.getDescription().contains(itemName)) {
+                items.remove(item);
+                return item;
+            }
+        }
+        return null;
     }
 }
 
