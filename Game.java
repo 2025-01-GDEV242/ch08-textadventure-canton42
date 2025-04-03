@@ -152,6 +152,10 @@ public class Game
                 goRoom(command);
                 break;
             
+            case LOOK:
+                look();
+                break;
+            
             case BACK:
                 goBack();
                 break;
@@ -184,7 +188,14 @@ public class Game
     }
 
     // implementations of user commands:
-
+    
+    /**
+     * Prints the player's current location.
+     */
+    private void look() {
+        System.out.println(player.getCurrentRoom().getLongDescription());
+    }
+    
     /**
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the 
