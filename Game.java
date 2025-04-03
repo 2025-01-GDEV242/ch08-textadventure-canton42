@@ -165,9 +165,17 @@ public class Game
                 break;
                 
             case DROP:
-                player.dropItem();
-                break;   
-
+                if (!command.hasSecondWord()) {
+                    System.out.println("Drop what?");
+                } else {
+                    player.dropItem(command.getSecondWord());
+                }
+                break;
+            
+            case BAG:
+                player.showBag();
+                break;
+                
             case QUIT:
                 wantToQuit = quit(command);
                 break;
@@ -200,8 +208,9 @@ public class Game
             return;
         }
         
-        Room previousRoom = roomHistory.pop();
+        Room previousRoom = roomHistory.peek();
         player.setCurrentRoom(previousRoom);
+        roomHistory.pop();
         
         System.out.println(player.getCurrentRoom().getLongDescription());
     }

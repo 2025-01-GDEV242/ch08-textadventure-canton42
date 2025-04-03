@@ -1,8 +1,8 @@
-
+import java.util.ArrayList;
 /**
- * Represents the player in the game. This class is a partial implementation
- * that currently tracks the player's location and allows the player to pick
- * up and drop a single item.
+ * Represents the player in the game. This class is a full implementation
+ * that tracks the player's location and allows the player to pick
+ * up and drop any number of items.
  *
  * @author Nolan Canto
  * @version 2025.04.02
@@ -11,17 +11,17 @@ public class Player
 {
     
     private Room currentRoom;
-    private Item carriedItem;
+    private ArrayList<Item> bag;
 
     /**
-     * Create a player with a starting room and an empty hand.
+     * Create a player with a starting room and an empty bag (inventory).
      * 
      * @param startingRoom the initial room for the player.
      */
     public Player(Room startingRoom)
     {
         this.currentRoom = startingRoom;
-        this.carriedItem = null;
+        this.bag = new ArrayList<>();
     }
 
     /**
@@ -34,12 +34,12 @@ public class Player
     }
     
     /**
-     * Returns the player's current item.
+     * Returns the player's current bag (inventory)
      * 
-     * @return current item
+     * @return current bag
      */
-    public Item getCarriedItem() {
-        return carriedItem;
+    public ArrayList<Item> getBag() {
+        return bag;
     }
     
     /**
@@ -52,40 +52,54 @@ public class Player
     }
     
     /**
-     * Allows the player to take an item from the current room.
+     * Allows the player to take items from the current room.
      * 
      * @param itemName name of item to take.
      * @return true if item was taken, false otherwise.
      */
     public boolean takeItem(String itemName) {
-        if (carriedItem != null) {
-            System.out.println("You already have an item in your bag. " + 
-            "\nYou must drop it first to carry a new one.");
-            
-            return false;
-        }
-        
         Item item = currentRoom.removeItem(itemName);
         if (item != null) {
-            carriedItem = item;
+            bag.add(item);
             System.out.println("You took: " + item.getDescription());
             return true;
         }
+        System.out.println("That item doesn't exist in this room.");
         return false;
     }
     
     /**
-     * Allows the player to drop their current item.
+     * Allows the player to drop their items into the current room.
      */
-    public void dropItem() {
-        if (carriedItem == null) {
+    public boolean dropItem(String itemName) {
+        for (Item item : bag) {
+            if (item.getDescription().contains(itemName)) {
+                bag.remove(item);
+                currentRoom.addItem(item);
+                System.out.println("You dropped: " + item.getDescription());
+                return true;
+            }
+        }
+        
+        System.out.println("You are not carrying this item.");
+        return false;
+    }
+    
+    /**
+     * shows the player's current bag (inventory)
+     * 
+     * @return if bag is empty
+     */
+    public void showBag() {
+        if (bag.isEmpty()) {
             System.out.println("Your bag is empty.");
             return;
         }
         
-        currentRoom.addItem(carriedItem);
-        System.out.println("You dropped: " + carriedItem.getDescription());
-        carriedItem = null;
+        System.out.println("Your bag contains: ");
+        for (Item item : bag) {
+            System.out.println(" " + item.getLongDescription());
+        }
     }
     
 }
