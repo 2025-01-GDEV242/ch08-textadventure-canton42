@@ -45,7 +45,7 @@ public class Item
     /**
      * gets long description of item (in pounds).
      * 
-     * return long description of item.
+     * @return long description of item.
      */
     public String getLongDescription() {
         return description + " (weight: " + weight + "lbs)";
