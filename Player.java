@@ -70,6 +70,8 @@ public class Player
     
     /**
      * Allows the player to drop their items into the current room.
+     * 
+     * @param itemName name of item being dropped.
      */
     public boolean dropItem(String itemName) {
         for (Item item : bag) {
