@@ -174,19 +174,11 @@ public class Game
                 break;
             
             case TAKE:
-                if (!command.hasSecondWord()) {
-                    System.out.println("Take what?");
-                } else {
-                    player.takeItem(command.getSecondWord());
-                }
+                take(command);
                 break;
                 
             case DROP:
-                if (!command.hasSecondWord()) {
-                    System.out.println("Drop what?");
-                } else {
-                    player.dropItem(command.getSecondWord());
-                }
+                drop(command);
                 break;
             
             case BAG:
@@ -203,7 +195,7 @@ public class Game
     // implementations of user commands:
     
     /**
-     * Prints the player's current location.
+     * Prints the player's current room and the items present in the room.
      */
     private void look() {
         System.out.println(player.getCurrentRoom().getLongDescription());
@@ -241,6 +233,8 @@ public class Game
     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
+     * 
+     * @param command the user's command.
      */
     private void goRoom(Command command) 
     {
@@ -280,6 +274,37 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
+    
+    /**
+     * Allows the player to take an item in the current room. 
+     * If the player does not have a second word in their command, 
+     * no items will be picked up.
+     * 
+     * @param command the user's command.
+     */
+    private void take(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Take what?");
+        } else {
+            player.takeItem(command.getSecondWord());
+        }
+    }
+    
+    /**
+     * Allows the player to drop an item in the current room.
+     * If the player does not have a second word in their command,
+     * no items will be dropped.
+     * 
+     * @param command the user's command.
+     */
+    private void drop(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Take what?");
+        } else {
+            player.dropItem(command.getSecondWord());
+        }
+    }
+    
     /**
      * main method that allows the game to be played outside of BlueJ.
      */
